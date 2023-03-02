@@ -38,8 +38,16 @@ html, body {
     justify-content: flex-end;
 }
 
-.calculator__result {
-
+.calculator__result,
+.calculator__result:disabled {
+    outline: none;
+    border: 0;
+    background: transparent;
+    height: 100%;
+    font-size: 36px;
+    width: 100%;
+    color: #ffffff;
+    caret-color: transparent;
 }
 
 .calculator__main {
