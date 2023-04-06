@@ -1,0 +1,1 @@
+export {getElem} from "./getElem.js";

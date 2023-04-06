@@ -1,12 +1,34 @@
-import { Button } from '../components/Button/Button.js';
+import { MainPage, CarouselPage } from '../pages/index.js';
 
-export class App {
+class App {
     constructor(parent) {
         this.parent = parent;
     }
 
+    clickCard(e) {
+        const cardId = e.target.dataset.id;
+        const carouselPage = new CarouselPage(this.pageRoot, cardId);
+        carouselPage.render();
+    }
+
+    get pageRoot() {
+        return document.getElementById('app');
+    }
+
+    get getHtml() {
+        return `
+            <div id="app"></div>
+        `
+    }
+
     render() {
-        const button = new Button("Какой-то текст");
-        this.parent.insertAdjacentHTML('beforeend', `${button.getHtml()}`);
+        this.parent.innerHTML = '';
+        const html = this.getHtml;
+        this.parent.insertAdjacentHTML('beforeend', html);
+
+        const mainPage = new MainPage(this.pageRoot);
+        mainPage.render();
     }
 }
+
+export default App;
