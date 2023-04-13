@@ -14,7 +14,7 @@ export class Image {
         const imgElem = getElem(this.parent, "image");
         this.parent.insertAdjacentHTML("beforeend", this.getHtml());
         const imgElemNode = imgElem.node();
-        imgElemNode.onload = function() {
+        if (imgElemNode.complete) {
             imgElemNode.classList.remove("placeholder");
         }
     }
