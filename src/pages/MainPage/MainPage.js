@@ -14,8 +14,6 @@ export class MainPage {
 
     clickCard(e) {
         const cardId = e.target.dataset.id;
-        // const carouselPage = new CarouselPage(this.parent, cardId);
-        // carouselPage.render();
         const userPage = new UserPage(this.parent, cardId);
         userPage.render();
     }
@@ -47,10 +45,5 @@ export class MainPage {
         this.parent.insertAdjacentHTML('beforeend', html);
 
         this.getData();
-
-        // data.themes.map((element, index) => {
-        //     const card = new Card(this.pageRoot);
-        //     card.render(element.title, {id: index}, this.clickCard.bind(this))
-        // });
     }
 }

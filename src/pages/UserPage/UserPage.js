@@ -24,20 +24,34 @@ export class UserPage {
 
     renderElemsWithData(root, data) {
         const userPageHeaderElem = new Elem(root, "header");
-        const userPageHeaderElemNode = userPageHeaderElem.node;
+        const userPageHeaderElemNode = userPageHeaderElem.node();
 
-        const userName = new Headers(userPageHeaderElemNode, 1, `${data?.first_name} ${data?.last_name}`);
+        const userInfo = new Elem(userPageHeaderElemNode, "userInfo");
+        
         const userAvatar = new Image(userPageHeaderElemNode, data?.photo_100);
+        userAvatar.render();
 
+        userInfo.render();
+        // const userInfoHtml = userInfo.createHtmlString("div");
+
+        const userInfoNode = userInfo.node();
+
+        const userName = new Headers(userInfoNode, 3, `${data?.first_name} ${data?.last_name}`);
+        const userCountry = new Headers(userInfoNode, 3, `${data.country.title}`)
+        
+
+        console.log(data.online);
         // Если пользователь онлайн, то рисуем badge online
-        if (data?.online) {
-            const onlineBadge = new Badge(userName.node);
+        if (data.online) {
+            const userNameNode = userName.node();
+            const onlineBadge = new Badge(userNameNode);
             
             onlineBadge.render();
         }
 
-        userAvatar.render();
+        
         userName.render();
+        userCountry.render();
     }
 
     render() {
@@ -51,7 +65,12 @@ export class UserPage {
         const userPageElemHtmlString = userPageElem.createHtmlString();
 
         this.parent.insertAdjacentHTML("beforeend", userPageElemHtmlString);
-        const userPageElemNode = userPageElem.node;
+        const userPageElemNode = userPageElem.node();
+
+        const backButton = new BackButtonComponent(userPageElemNode);
+
+        backButton.render(this.clickBack.bind(this));
+        
 
         const userPageHeader = new Header(userPageElemNode);
         userPageHeader.render();
@@ -59,13 +78,12 @@ export class UserPage {
         // const userPageHeaderElem = getElem(userPageElemNode, "header");
         // const userPageHeaderElemNode = userPageHeaderElem.node();
         const userPageHeaderElem = new Elem(userPageElemNode, "header");
-        const userPageHeaderElemNode = userPageHeaderElem.node;
-        userPageElemNode.classList.add("text-center")
+        const userPageHeaderElemNode = userPageHeaderElem.node();
+        userPageHeaderElemNode.classList.add("text-start");
+        userPageHeaderElemNode.classList.add("d-flex");
+        userPageHeaderElemNode.classList.add("align-items-center");
 
         /* HEADER */
-        const backButton = new BackButtonComponent(userPageHeaderElemNode);
-
-        backButton.render(this.clickBack.bind(this));
         
         this.getData(userPageElemNode);
 

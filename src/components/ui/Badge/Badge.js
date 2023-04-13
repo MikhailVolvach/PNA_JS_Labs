@@ -12,6 +12,7 @@ export class Badge extends Elem{
     createHtmlString() {}
 
     render() {
-        this.parent?.insertAdjacentHTML("beforeend", this.Html)
+        const html = this.Html;
+        this.parent?.insertAdjacentHTML("beforeend", html);
     }
 }

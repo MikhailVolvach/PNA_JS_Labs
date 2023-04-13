@@ -7,7 +7,7 @@ export class Image extends Elem{
     }
 
     getHtml() {
-        return this.createHtmlString("img", false, [`src="${this.src}"`], ["image", "placeholder", "rounded-circle", "mx-auto", "d-block"]); // <img src="${this.src}" class="image placeholder rounded mx-auto d-block">
+        return this.createHtmlString("img", false, [`src="${this.src}"`], ["image", "rounded-circle", "mx-5"]); // <img src="${this.src}" class="image placeholder rounded mx-auto d-block">
     }
 
     render() {

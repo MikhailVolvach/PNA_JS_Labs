@@ -17,8 +17,12 @@ export class Elem {
         <${component} class="${classList.join(' ')}" ${params.join(" ")} id="${this.elemName}"${!closable ? " /" : ""}> ${closable ? "</" + component + ">" : ""}`;
     }
 
-    get node() {
+    node() {
         return this?.parent?.querySelector(`#${this.elemName}`) ? this?.parent?.querySelector(`#${this.elemName}`) : this?.parent?.querySelector(`.${this.elemName}`);
+    }
+
+    render() {
+        this.parent.insertAdjacentHTML("beforeend", this.createHtmlString());
     }
 }
 
