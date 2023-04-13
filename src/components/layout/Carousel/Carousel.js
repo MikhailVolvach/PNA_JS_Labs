@@ -11,10 +11,6 @@ export class Carousel {
     getCarouselItemHtml(element, index) {
       return `<div class="carousel-item${(index === 0) ? ' active' : ''} h-100">
       <img src="${element.src}" class="d-block w-100 object-fit-cover align-middle" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Метка первого слайда</h5>
-        <p>Некоторый репрезентативный заполнитель для первого слайда.</p>
-      </div>
     </div>`;
     }
 
