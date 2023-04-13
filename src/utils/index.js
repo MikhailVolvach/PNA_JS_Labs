@@ -1,1 +1,1 @@
-export {getElem} from "./getElem.js";
+export {getElem, Elem} from "./getElem.js";

@@ -18,7 +18,6 @@ export class CarouselPage {
   render() {
     this.parent.innerHTML = "";
     
-    // TODO: Добавить breadcrumb с навзванием страницы относительно главной страницы
     const pageElem = getElem(this.parent, "carouselPage");
     const pageElemHtmlString = pageElem.htmlString; // Получаем html-строку элемента страницы
     

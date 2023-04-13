@@ -1,11 +1,15 @@
-export class Header {
+import { Elem } from "../../../utils/index.js";
+
+export class Header extends Elem{
     constructor(parent) {
-        this.parent = parent;
+        super(parent, "header");
     }
 
     getHtml() {
-        return "<header id='header'></header>"
+        console.log(this.createHtmlString("header"));
+        return this.createHtmlString("header"); // "<header id='header'></header>"
     }
+
 
     render() {
         const html = this.getHtml();

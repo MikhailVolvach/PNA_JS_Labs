@@ -1,3 +1,5 @@
+import { Elem } from "../../../utils/index.js";
+
 const HeaderSizeEnum = {
     1: "1",
     2: "2",
@@ -7,16 +9,18 @@ const HeaderSizeEnum = {
     6: "6"
 }
 
-export class Headers {
+export class Headers extends Elem {
     constructor(parent, headerSize, children) {
-        this.parent = parent;
+        super(parent, "h");
         this.headerSize = HeaderSizeEnum[headerSize];
         this.children = children;
     }
 
     get getHtml() {
-        return `<h${this.headerSize}>${this.children}</h${this.headerSize}>`;
+        return `<h${this.headerSize} class="h h${this.headerSize}">${this.children}</h${this.headerSize}>`;
     }
+
+    createHtmlString() {}
 
     render() {
         const html = this.getHtml;

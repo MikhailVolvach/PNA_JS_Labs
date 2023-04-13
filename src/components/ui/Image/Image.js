@@ -1,19 +1,20 @@
-import { getElem } from "../../../utils/index.js";
+import { Elem, getElem } from "../../../utils/index.js";
 
-export class Image {
-    constructor(parent, src) {
-        this.parent = parent;
+export class Image extends Elem{
+    constructor(parent, src = "") {
+        super(parent, "image")
         this.src = src;
     }
 
     getHtml() {
-        return `<img src="${this.src}" class="image placeholder rounded mx-auto d-block">`
+        return this.createHtmlString("img", false, [`src="${this.src}"`], ["image", "placeholder", "rounded-circle", "mx-auto", "d-block"]); // <img src="${this.src}" class="image placeholder rounded mx-auto d-block">
     }
 
     render() {
-        const imgElem = getElem(this.parent, "image");
+        console.log(this.getHtml());
         this.parent.insertAdjacentHTML("beforeend", this.getHtml());
-        const imgElemNode = imgElem.node();
+
+        const imgElemNode = this.node;
         imgElemNode.onload = function() {
             imgElemNode.classList.remove("placeholder");
         }

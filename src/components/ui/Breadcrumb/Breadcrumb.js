@@ -1,6 +1,8 @@
-export class Breadcrumb {
+import { Elem } from "../../../utils/index.js";
+
+export class Breadcrumb extends Elem{
     constructor(parent, pageName) {
-        this.parent = parent;
+        super(parent, "breadcrumb");
         this.pageName = pageName;
     }
 
@@ -14,6 +16,8 @@ export class Breadcrumb {
             </ol>
         </nav>`;
     }
+
+    createHtmlString() {}
 
     render() {
         this.parent.insertAdjacentHTML("beforeend", this.Html);

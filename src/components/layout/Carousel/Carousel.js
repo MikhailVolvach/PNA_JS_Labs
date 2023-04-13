@@ -1,6 +1,8 @@
-export class Carousel {
+import { Elem } from "../../../utils/index.js";
+
+export class Carousel extends Elem {
     constructor(parent, images = null) {
-        this.parent = parent;
+        super(parent, "carouselExampleCaptions");
         this.images = images;
     }
 
