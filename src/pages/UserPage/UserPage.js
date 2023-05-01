@@ -16,10 +16,11 @@ export class UserPage {
     }
 
     getData(root) {
-        ajax.post(urls.getUserInfo(this.id), (data) => {
-            // console.log(this.data);
-            this.renderElemsWithData(root, data.response[0]);
-        })
+        // ajax.post(urls.getUserInfo(this.id), (data) => {
+        //     // console.log(this.data);
+        //     this.renderElemsWithData(root, data.response[0]);
+        // })
+        ajax.post(urls.getPosts(), (data) => {});
     }
 
     renderElemsWithData(root, data) {

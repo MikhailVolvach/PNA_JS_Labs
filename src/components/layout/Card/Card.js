@@ -8,7 +8,7 @@ export class Card extends Elem{
     getHtml () {
         return `
         <div class="card" style="width: 300px">
-            <img class="card-img-top" src="${this.data.photo_100}" alt="Avatar" /> 
+            <img class="card-img-top" src="${this.data.photo_400_orig}" alt="Avatar" /> 
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">${this.data.first_name} ${this.data.last_name}</h5>
                 <button class="btn btn-primary" id="click-card-${this.data.id}" data-id="${this.data.id}">Нажми на меня</button>
