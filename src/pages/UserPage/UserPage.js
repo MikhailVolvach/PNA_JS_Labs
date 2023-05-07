@@ -1,6 +1,6 @@
 import { ajax, urls } from "../../modules/index.js";
 import { getElem, Elem } from "../../utils/getElem.js";
-import { Header } from "../../components/layout/index.js";
+import { Card, Header } from "../../components/layout/index.js";
 import { BackButtonComponent, Badge, Headers, Image } from "../../components/ui/index.js";
 import { MainPage } from "../MainPage/MainPage.js";
 
@@ -8,6 +8,13 @@ export class UserPage {
     constructor(parent, id) {
         this.parent = parent;
         this.id = +id;
+        this.data = {};
+    }
+
+    clickCard(e) {
+        // Клик по кнопке карточки
+        const cardId = e.target.dataset.id;
+        ajax.post(urls.addLike(cardId), res => console.log(res));
     }
 
     clickBack(e) {
@@ -15,79 +22,57 @@ export class UserPage {
         mainPage.render();
     }
 
+    get pageRoot() {
+        return document.querySelector("userPage");
+    }
+
     getData(root) {
-        // ajax.post(urls.getUserInfo(this.id), (data) => {
-        //     // console.log(this.data);
-        //     this.renderElemsWithData(root, data.response[0]);
-        // })
-        ajax.post(urls.getPosts(), (data) => {});
+        ajax.post(urls.getPosts(this.id), (data) => {this.renderElemsWithData(root, data.response)});
     }
 
     renderElemsWithData(root, data) {
-        const userPageHeaderElem = new Elem(root, "header");
-        const userPageHeaderElemNode = userPageHeaderElem.node();
+        root.classList.add("container");
 
-        const userInfo = new Elem(userPageHeaderElemNode, "userInfo");
-        
-        const userAvatar = new Image(userPageHeaderElemNode, data?.photo_100);
-        userAvatar.render();
+        const userPostsContainerElem = new Elem(root, "userPostsContainer");
+        userPostsContainerElem.render();
+        const userPostsContainerElemNode = userPostsContainerElem.node();
 
-        userInfo.render();
-        // const userInfoHtml = userInfo.createHtmlString("div");
+        userPostsContainerElemNode.classList.add("row");
+        userPostsContainerElemNode.classList.add("justify-content-between");
+        userPostsContainerElemNode.classList.add("gy-5");
 
-        const userInfoNode = userInfo.node();
+        data.items.forEach(post => {
+            const imageUrl = post.hasOwnProperty("copy_history") 
+                ? post?.copy_history[0]?.attachments?.find(attachment => attachment?.type === "photo")?.photo?.sizes?.find(size=> size?.type === "q")?.url 
+                : post.attachments?.find(attachment => attachment?.type === "photo").photo?.sizes?.find(size => size?.type === "q")?.url;
 
-        const userName = new Headers(userInfoNode, 3, `${data?.first_name} ${data?.last_name}`);
-        const userCountry = new Headers(userInfoNode, 3, `${data.country.title}`)
-        
+            const linkUrl = post.hasOwnProperty("copy_history") 
+                ? post?.copy_history[0]?.attachments?.find(attachment => attachment?.type === "link")?.url
+                : post?.attachments?.find(attachment => attachment?.type === "link")?.url;
 
-        console.log(data.online);
-        // Если пользователь онлайн, то рисуем badge online
-        if (data.online) {
-            const userNameNode = userName.node();
-            const onlineBadge = new Badge(userNameNode);
-            
-            onlineBadge.render();
-        }
+            const postText = post.hasOwnProperty("copy_history")
+                ? post?.copy_history[0]?.text
+                : post?.text;
 
-        
-        userName.render();
-        userCountry.render();
+            const likesCount = post.likes.hasOwnProperty("count")? post.likes.count : 0;
+            console.log(likesCount);
+            const postId = post?.id;
+
+            const userPostCard = new Card(userPostsContainerElemNode);
+            userPostCard.render(this.clickCard.bind(this), postId, imageUrl, "", likesCount);
+        });
     }
 
     render() {
         this.parent.innerHTML = "";
 
-        this.getData();
-
-        // const userPageElem = getElem(this.parent, "userPage");
-        // const userPageElemHtmlString = userPageElem.htmlString;
         const userPageElem = new Elem(this.parent, "userPage");
         const userPageElemHtmlString = userPageElem.createHtmlString();
 
         this.parent.insertAdjacentHTML("beforeend", userPageElemHtmlString);
+
         const userPageElemNode = userPageElem.node();
 
-        const backButton = new BackButtonComponent(userPageElemNode);
-
-        backButton.render(this.clickBack.bind(this));
-        
-
-        const userPageHeader = new Header(userPageElemNode);
-        userPageHeader.render();
-
-        // const userPageHeaderElem = getElem(userPageElemNode, "header");
-        // const userPageHeaderElemNode = userPageHeaderElem.node();
-        const userPageHeaderElem = new Elem(userPageElemNode, "header");
-        const userPageHeaderElemNode = userPageHeaderElem.node();
-        userPageHeaderElemNode.classList.add("text-start");
-        userPageHeaderElemNode.classList.add("d-flex");
-        userPageHeaderElemNode.classList.add("align-items-center");
-
-        /* HEADER */
-        
         this.getData(userPageElemNode);
-
-        /* BODY */
     }
 }

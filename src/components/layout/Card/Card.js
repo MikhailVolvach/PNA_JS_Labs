@@ -5,31 +5,31 @@ export class Card extends Elem{
         super(parent, "card");
     }
 
-    getHtml () {
+    getHtml (id, imgUrl, cardTitle, cardText, buttonText="Нажми на меня") {
         return `
         <div class="card" style="width: 300px">
-            <img class="card-img-top" src="${this.data.photo_400_orig}" alt="Avatar" /> 
+            ${ imgUrl ? '<img class="card-img-top" src="' + imgUrl + '" alt="Avatar" /> ' : ""}
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title">${this.data.first_name} ${this.data.last_name}</h5>
-                <button class="btn btn-primary" id="click-card-${this.data.id}" data-id="${this.data.id}">Нажми на меня</button>
+                ${ cardTitle ? '<h5 class="card-title">' + cardTitle + '</h5>' : ""}
+                ${ cardText !== undefined ? '<p class="card-text">' + cardText + '</p>' : ""}
+                <button class="btn btn-primary" id="click-card-${id}" data-id="${id}">${buttonText}</button>
             </div>
         </div>`;
     }
 
-    addListeners(data, listener) {
+    addListeners(id, listener) {
         document
-            .getElementById(`click-card-${data.id}`)
+            .getElementById(`click-card-${id}`)
             .addEventListener("click", listener);
     }
 
     createHtmlString() {}
     
-    render(data, listener) {
-        this.data = data;
+    render(listener, id=0, imgUrl="", cardTitle="", cardText) {
         this.listener = listener;
 
-        const html = this.getHtml();
+        const html = this.getHtml(id, imgUrl, cardTitle, cardText);
         this.parent.insertAdjacentHTML('beforeend', html);
-        this.addListeners(this.data, this.listener);
+        this.addListeners(id, this.listener);
     }
 }

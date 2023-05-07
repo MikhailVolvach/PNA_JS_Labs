@@ -25,9 +25,9 @@ export class MainPage {
     }
 
     renderData(items) {
-        items.forEach((item, index) => {
+        items.forEach((item) => {
             const userCard = new Card(this.pageRoot);
-            userCard.render(item, this.clickCard.bind(this));
+            userCard.render(this.clickCard.bind(this), item.id, item.photo_400_orig, `${item.first_name} ${item.last_name}`);
         });
     }
 

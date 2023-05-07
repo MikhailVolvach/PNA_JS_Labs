@@ -1,6 +1,6 @@
 import { Elem, getElem } from "../../../utils/index.js";
 
-export class Image extends Elem{
+export class Image extends Elem {
     constructor(parent, src = "") {
         super(parent, "image")
         this.src = src;
