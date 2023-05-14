@@ -5,7 +5,7 @@ export class Card extends Elem{
         super(parent, "card");
     }
 
-    getHtml (id, imgUrl, cardTitle, cardText, buttonText="Нажми на меня") {
+    getHtml (id, imgUrl, cardTitle, cardText, buttonText) {
         return `
         <div class="card" style="width: 300px">
             ${ imgUrl ? '<img class="card-img-top" src="' + imgUrl + '" alt="Avatar" /> ' : ""}
@@ -25,10 +25,10 @@ export class Card extends Elem{
 
     createHtmlString() {}
     
-    render(listener, id=0, imgUrl="", cardTitle="", cardText) {
+    render(listener, id=0, imgUrl="", cardTitle="", cardText, buttonText="Нажми на меня") {
         this.listener = listener;
 
-        const html = this.getHtml(id, imgUrl, cardTitle, cardText);
+        const html = this.getHtml(id, imgUrl, cardTitle, cardText, buttonText);
         this.parent.insertAdjacentHTML('beforeend', html);
         this.addListeners(id, this.listener);
     }

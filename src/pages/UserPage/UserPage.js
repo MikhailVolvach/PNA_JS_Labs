@@ -14,7 +14,30 @@ export class UserPage {
     clickCard(e) {
         // Клик по кнопке карточки
         const cardId = e.target.dataset.id;
-        ajax.post(urls.addLike(cardId), res => console.log(res));
+        // ajax.post(urls.addLike(cardId), res => console.log(res));
+
+        // ajax.post(urls.getLikes(cardId, this.id), res => console.log(res));
+        // ajax.post(urls.addLike(cardId, this.id), res => {
+        //     if ("error" in res) {
+        //         ajax.post(urls.deleteLike(cardId, this.id), res => {
+        //             console.log("Like deleted");
+        //         });
+        //     } else {
+        //         console.log("Like added");
+        //     }
+        // });
+
+        ajax(urls.addLike(cardId, this.id))
+            .then(res => {
+                if ("error" in res) {
+                    ajax(urls.deleteLike(cardId, this.id)).then(res => console.log("Like deleted"))
+                } else {
+                    console.log("Like added");
+                }
+            })
+            // .catch(err => console.log(err));
+            // ajax(urls.deleteLike(cardId, this.id)).then(res => console.log)
+
     }
 
     clickBack(e) {
@@ -27,7 +50,8 @@ export class UserPage {
     }
 
     getData(root) {
-        ajax.post(urls.getPosts(this.id), (data) => {this.renderElemsWithData(root, data.response)});
+        // ajax.post(urls.getPosts(this.id), (data) => {this.renderElemsWithData(root, data.response)});
+        ajax(urls.getPosts(this.id)).then(response => {this.renderElemsWithData(root, response.response)});
     }
 
     renderElemsWithData(root, data) {
@@ -59,7 +83,7 @@ export class UserPage {
             const postId = post?.id;
 
             const userPostCard = new Card(userPostsContainerElemNode);
-            userPostCard.render(this.clickCard.bind(this), postId, imageUrl, "", likesCount);
+            userPostCard.render(this.clickCard.bind(this), postId, imageUrl, "", likesCount, "Like");
         });
     }
 

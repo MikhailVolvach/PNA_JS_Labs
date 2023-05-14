@@ -19,9 +19,11 @@ export class MainPage {
     }
 
     getData() {
-        ajax.post(urls.getGroupMembers(Constants.GROUP_ID), (data) => {
-            this.renderData(data.response.items);
-        })
+        // ajax.post(urls.getGroupMembers(Constants.GROUP_ID), (data) => {
+        //     this.renderData(data.response.items);
+        // })
+
+        ajax(urls.getGroupMembers(Constants.GROUP_ID)).then((response) => this.renderData(response.response.items));
     }
 
     renderData(items) {

@@ -7,12 +7,20 @@ class Urls {
         this.commonInfoUser = `access_token=${Constants.ACCESS_TOKEN_USER}&v=${Constants.VERSION}`;
     }
 
-    addLike(postId) {
-        return `${this.url}/wall.addLike?post_id=${postId}&${this.commonInfoUser}`;
+    addLike(postId, ownerId) {
+        return `${this.url}/wall.addLike?owner_id=${ownerId}&post_id=${postId}&${this.commonInfoUser}`;
     }
 
-    getPosts(owner_id) {
-        return `${this.url}/wall.get?owner_id=${owner_id}&${this.commonInfoUser}`;
+    deleteLike(postId, ownerId) {
+        return `${this.url}/wall.deleteLike?owner_id=${ownerId}&post_id=${postId}&${this.commonInfoUser}`
+    }
+
+    getLikes(postId, ownerId) {
+        return `${this.url}/wall.getLikes?owner_id=${ownerId}&post_id=${postId}&${this.commonInfoUser}`;
+    }
+
+    getPosts(ownerId) {
+        return `${this.url}/wall.get?owner_id=${ownerId}&${this.commonInfoUser}`;
     }
 
     getUserInfo(userId) {
